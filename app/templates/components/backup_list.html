@@ -1,0 +1,12 @@
+<div class="roster-section">
+    <h3 class="roster-section__title">Backup list</h3>
+    {% if backups %}
+    <ol class="roster">
+        {% for r in backups %}
+        <li class="roster__item">{{ r.user.first_name }} {{ r.user.last_name }}</li>
+        {% endfor %}
+    </ol>
+    {% else %}
+    <p class="empty-state">No one on the backup list.</p>
+    {% endif %}
+</div>

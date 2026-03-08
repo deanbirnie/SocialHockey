@@ -1,0 +1,16 @@
+<div class="roster-section">
+    <h3 class="roster-section__title">
+        Players
+        <span class="roster-count">{{ players | length }}/{{ max_players }}</span>
+    </h3>
+    <ol class="roster">
+        {% for r in players %}
+        <li class="roster__item roster__item--filled">
+            {{ r.user.first_name }} {{ r.user.last_name }}
+        </li>
+        {% endfor %}
+        {% for _ in range(max_players - (players | length)) %}
+        <li class="roster__item roster__item--open">(open)</li>
+        {% endfor %}
+    </ol>
+</div>

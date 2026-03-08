@@ -1,0 +1,33 @@
+<div class="game-card" id="game-card-{{ game.id }}">
+    <div class="game-card__header">
+        <span class="game-card__title">{{ game.title }}</span>
+        <span class="badge badge--{{ game.status }}">{{ game.status }}</span>
+    </div>
+    <div class="game-card__meta">
+        <span>{{ game.game_date.strftime('%a %d %b %Y') }}</span>
+        <span>{{ game.start_time.strftime('%H:%M') }}–{{ game.end_time.strftime('%H:%M') }}</span>
+        <span>Max {{ game.max_players }} players</span>
+    </div>
+    {% if game.status == "draft" %}
+    <div class="game-card__actions">
+        <button
+            class="btn btn--primary btn--sm"
+            hx-post="/admin/games/{{ game.id }}/publish"
+            hx-target="#game-card-{{ game.id }}"
+            hx-swap="outerHTML"
+        >Publish</button>
+    </div>
+    {% elif game.status == "published" %}
+    <div class="game-card__actions">
+        <a class="btn btn--secondary btn--sm" href="/games/{{ game.id }}">View</a>
+        <a class="btn btn--secondary btn--sm" href="/admin/games/{{ game.id }}">Manage</a>
+        <button
+            class="btn btn--danger btn--sm"
+            hx-post="/admin/games/{{ game.id }}/cancel"
+            hx-target="#game-card-{{ game.id }}"
+            hx-swap="outerHTML"
+            hx-confirm="Cancel this game?"
+        >Cancel</button>
+    </div>
+    {% endif %}
+</div>

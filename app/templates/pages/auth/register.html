@@ -1,0 +1,36 @@
+{% extends "layouts/public.html" %}
+
+{% block title %}Create Account — SocialHockey{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="auth-card">
+        <h1>Create Account</h1>
+        <p class="auth-card__sub">We don't recognise that email. Fill in your details to register.</p>
+        <form action="/auth/register" method="post">
+            <div class="form-group">
+                <label for="first_name">First name</label>
+                <input type="text" id="first_name" name="first_name" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last name</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    value="{{ email }}"
+                >
+            </div>
+            <button type="submit" class="btn btn--primary">Create Account</button>
+        </form>
+        <p class="auth-card__footer">
+            Already have an account? <a href="/auth/login">Sign in</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

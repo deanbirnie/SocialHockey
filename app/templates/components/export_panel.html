@@ -1,0 +1,28 @@
+<div class="export-panel">
+    <h2 class="section-title">Export</h2>
+
+    <div class="export-block">
+        <p class="export-block__label">WhatsApp message</p>
+        <pre class="export-preview" id="wa-message-text">{{ wa_message }}</pre>
+        <div class="export-actions">
+            <button
+                class="btn btn--secondary btn--sm"
+                onclick="copyToClipboard(document.getElementById('wa-message-text').textContent, this)"
+            >Copy to clipboard</button>
+            <a
+                class="btn btn--secondary btn--sm"
+                href="{{ wa_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >Open in WhatsApp</a>
+        </div>
+    </div>
+
+    <div class="export-block">
+        <p class="export-block__label">Excel</p>
+        <a
+            class="btn btn--secondary btn--sm"
+            href="/admin/games/{{ game_id }}/export/excel"
+        >Download .xlsx</a>
+    </div>
+</div>

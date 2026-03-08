@@ -1,0 +1,81 @@
+<div class="team-assignment-grid">
+
+    <div class="team-column">
+        <h3 class="team-column__title">&#11035; Team Black Shirts</h3>
+        <div
+            class="sortable-team"
+            id="team-black"
+            hx-post="/admin/games/{{ game_id }}/update-teams"
+            hx-trigger="sortableEnd"
+            hx-swap="none"
+            hx-include="[data-team-input]"
+        >
+            {% for r in black_team %}
+            <div class="player-card" data-player-id="{{ r.user_id }}">
+                <span class="player-card__name">{{ r.user.first_name }} {{ r.user.last_name }}</span>
+                <button
+                    class="player-card__remove"
+                    hx-post="/admin/games/{{ game_id }}/remove-player/{{ r.user_id }}"
+                    hx-target="#admin-roster"
+                    hx-swap="innerHTML"
+                    hx-confirm="Remove {{ r.user.first_name }} {{ r.user.last_name }} from this game?"
+                    onmousedown="event.stopPropagation()"
+                >✕</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="team-column">
+        <h3 class="team-column__title">&#128203; Unassigned</h3>
+        <div
+            class="sortable-team"
+            id="team-unassigned"
+            hx-post="/admin/games/{{ game_id }}/update-teams"
+            hx-trigger="sortableEnd"
+            hx-swap="none"
+            hx-include="[data-team-input]"
+        >
+            {% for r in unassigned %}
+            <div class="player-card" data-player-id="{{ r.user_id }}">
+                <span class="player-card__name">{{ r.user.first_name }} {{ r.user.last_name }}</span>
+                <button
+                    class="player-card__remove"
+                    hx-post="/admin/games/{{ game_id }}/remove-player/{{ r.user_id }}"
+                    hx-target="#admin-roster"
+                    hx-swap="innerHTML"
+                    hx-confirm="Remove {{ r.user.first_name }} {{ r.user.last_name }} from this game?"
+                    onmousedown="event.stopPropagation()"
+                >✕</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="team-column">
+        <h3 class="team-column__title">&#11036; Team White Shirts</h3>
+        <div
+            class="sortable-team"
+            id="team-white"
+            hx-post="/admin/games/{{ game_id }}/update-teams"
+            hx-trigger="sortableEnd"
+            hx-swap="none"
+            hx-include="[data-team-input]"
+        >
+            {% for r in white_team %}
+            <div class="player-card" data-player-id="{{ r.user_id }}">
+                <span class="player-card__name">{{ r.user.first_name }} {{ r.user.last_name }}</span>
+                <button
+                    class="player-card__remove"
+                    hx-post="/admin/games/{{ game_id }}/remove-player/{{ r.user_id }}"
+                    hx-target="#admin-roster"
+                    hx-swap="innerHTML"
+                    hx-confirm="Remove {{ r.user.first_name }} {{ r.user.last_name }} from this game?"
+                    onmousedown="event.stopPropagation()"
+                >✕</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>

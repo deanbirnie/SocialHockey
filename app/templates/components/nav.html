@@ -1,0 +1,20 @@
+<nav class="nav">
+    <a class="nav__brand" href="/">SocialHockey</a>
+    <ul class="nav__links">
+        {% if user %}
+            <li><a href="/games">Games</a></li>
+            {% if user.role in ("admin", "super_admin") %}
+                <li><a href="/admin/dashboard">Admin</a></li>
+                <li><a href="/admin/users">Users</a></li>
+            {% endif %}
+            <li><span class="nav__username">{{ user.first_name }}</span></li>
+            <li>
+                <form action="/auth/logout" method="post">
+                    <button type="submit" class="nav__logout">Logout</button>
+                </form>
+            </li>
+        {% else %}
+            <li><a href="/auth/login">Login</a></li>
+        {% endif %}
+    </ul>
+</nav>

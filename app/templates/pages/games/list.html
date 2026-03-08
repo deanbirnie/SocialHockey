@@ -1,0 +1,35 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}Games — SocialHockey{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Upcoming Games</h1>
+    </div>
+
+    {% if games_with_counts %}
+    <div class="game-list">
+        {% for game, available_count in games_with_counts %}
+        <a class="game-card game-card--link" href="/games/{{ game.id }}">
+            <div class="game-card__header">
+                <span class="game-card__title">{{ game.title }}</span>
+                {% if available_count > 0 %}
+                <span class="badge badge--published">{{ available_count }} spot{{ 's' if available_count != 1 }} left</span>
+                {% else %}
+                <span class="badge badge--cancelled">Full</span>
+                {% endif %}
+            </div>
+            <div class="game-card__meta">
+                <span>{{ game.game_date.strftime('%a %d %b %Y') }}</span>
+                <span>{{ game.start_time.strftime('%H:%M') }}–{{ game.end_time.strftime('%H:%M') }}</span>
+                <span>Max {{ game.max_players }} players</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty-state">No upcoming games scheduled.</p>
+    {% endif %}
+</div>
+{% endblock %}

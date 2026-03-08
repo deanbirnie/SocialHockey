@@ -1,0 +1,30 @@
+<div class="user-row">
+    <div class="user-row__info">
+        <span class="user-row__name">{{ row_user.first_name }} {{ row_user.last_name }}</span>
+        <span class="user-row__email">{{ row_user.email }}</span>
+    </div>
+    <div class="user-row__meta">
+        <span class="badge badge--role-{{ row_user.role | replace('_', '-') }}">
+            {{ row_user.role | replace('_', ' ') | title }}
+        </span>
+        {% if row_user.id != user.id %}
+            {% if row_user.role == "player" and user.role in ("admin", "super_admin") %}
+            <button
+                class="btn btn--secondary btn--sm"
+                hx-post="/admin/users/{{ row_user.id }}/make-admin"
+                hx-target="closest .user-row"
+                hx-swap="outerHTML"
+                hx-confirm="Make {{ row_user.first_name }} {{ row_user.last_name }} an admin?"
+            >Promote to Admin</button>
+            {% elif row_user.role == "admin" and user.role == "super_admin" %}
+            <button
+                class="btn btn--danger btn--sm"
+                hx-post="/admin/users/{{ row_user.id }}/remove-admin"
+                hx-target="closest .user-row"
+                hx-swap="outerHTML"
+                hx-confirm="Remove {{ row_user.first_name }} {{ row_user.last_name }} as admin?"
+            >Remove Admin</button>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

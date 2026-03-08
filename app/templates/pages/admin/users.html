@@ -1,0 +1,22 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}User Management — SocialHockey{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>User Management</h1>
+        <a class="btn btn--secondary btn--sm" href="/admin/dashboard">Dashboard</a>
+    </div>
+
+    <p class="users-count">{{ users | length }} registered user{{ 's' if users | length != 1 }}</p>
+
+    <div class="user-list">
+        {% for row_user in users %}
+            {% include "components/user_row.html" %}
+        {% else %}
+        <p class="empty-state">No users found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

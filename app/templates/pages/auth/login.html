@@ -1,0 +1,26 @@
+{% extends "layouts/public.html" %}
+
+{% block title %}Sign In — SocialHockey{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="auth-card">
+        <h1>Sign In</h1>
+        <p class="auth-card__sub">Enter your email and we'll send you a login link.</p>
+        <form action="/auth/login" method="post">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    autofocus
+                    placeholder="you@example.com"
+                >
+            </div>
+            <button type="submit" class="btn btn--primary">Send Login Link</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

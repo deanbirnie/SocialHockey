@@ -1,0 +1,17 @@
+{% for u in users %}
+<div class="search-result">
+    <span class="search-result__name">{{ u.first_name }} {{ u.last_name }}</span>
+    <span class="search-result__email">{{ u.email }}</span>
+    <button
+        class="btn btn--primary btn--sm"
+        hx-post="/admin/games/{{ game_id }}/add-player"
+        hx-target="#admin-roster"
+        hx-swap="innerHTML"
+        hx-vals='{"user_id": "{{ u.id }}"}'
+    >Add</button>
+</div>
+{% else %}
+{% if query | length >= 2 %}
+<p class="empty-state">No players found matching "{{ query }}".</p>
+{% endif %}
+{% endfor %}

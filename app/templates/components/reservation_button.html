@@ -1,0 +1,30 @@
+<div class="reservation-action">
+    {% if user_reservation %}
+        {% if user_reservation.is_backup %}
+        <p class="reservation-status">You are on the backup list.</p>
+        {% else %}
+        <p class="reservation-status">You have spot #{{ user_reservation.position }}.</p>
+        {% endif %}
+        <button
+            class="btn btn--danger"
+            hx-post="/games/{{ game_id }}/cancel"
+            hx-target="#game-lists"
+            hx-swap="innerHTML"
+            hx-confirm="Cancel your reservation?"
+        >Cancel My Spot</button>
+    {% elif available_count > 0 %}
+        <button
+            class="btn btn--primary"
+            hx-post="/games/{{ game_id }}/reserve"
+            hx-target="#game-lists"
+            hx-swap="innerHTML"
+        >Reserve a Spot</button>
+    {% else %}
+        <button
+            class="btn btn--secondary"
+            hx-post="/games/{{ game_id }}/reserve"
+            hx-target="#game-lists"
+            hx-swap="innerHTML"
+        >Join Backup List</button>
+    {% endif %}
+</div>

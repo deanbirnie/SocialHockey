@@ -1,0 +1,32 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}Admin Dashboard — SocialHockey{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Game Management</h1>
+        <a class="btn btn--primary" href="/admin/games/new">+ New Game</a>
+    </div>
+
+    {% macro game_section(heading, games) %}
+    <section class="dashboard-section">
+        <h2 class="dashboard-section__title">{{ heading }}</h2>
+        {% if games %}
+            <div class="game-list">
+                {% for game in games %}
+                    {% include "components/game_card.html" %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty-state">No {{ heading | lower }} games.</p>
+        {% endif %}
+    </section>
+    {% endmacro %}
+
+    {{ game_section("Published", published) }}
+    {{ game_section("Draft", draft) }}
+    {{ game_section("Completed", completed) }}
+    {{ game_section("Cancelled", cancelled) }}
+</div>
+{% endblock %}

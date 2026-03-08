@@ -1,0 +1,67 @@
+<div class="roster-section">
+    <h3 class="roster-section__title">
+        Players
+        <span class="roster-count">{{ players | length }}/{{ max_players }}</span>
+    </h3>
+    {% if players %}
+    <ol class="roster">
+        {% for r in players %}
+        <li class="roster__item roster__item--filled">
+            <span class="roster__name">{{ r.user.first_name }} {{ r.user.last_name }}</span>
+            <div class="roster__actions">
+                <button
+                    class="btn btn--secondary btn--sm"
+                    hx-post="/admin/games/{{ game_id }}/move-to-backup/{{ r.user_id }}"
+                    hx-target="#admin-roster"
+                    hx-swap="innerHTML"
+                >→ Backup</button>
+                <button
+                    class="btn btn--danger btn--sm"
+                    hx-post="/admin/games/{{ game_id }}/remove-player/{{ r.user_id }}"
+                    hx-target="#admin-roster"
+                    hx-swap="innerHTML"
+                    hx-confirm="Remove {{ r.user.first_name }} {{ r.user.last_name }} from this game?"
+                >✕</button>
+            </div>
+        </li>
+        {% endfor %}
+        {% for _ in range(max_players - (players | length)) %}
+        <li class="roster__item roster__item--open">(open)</li>
+        {% endfor %}
+    </ol>
+    {% else %}
+    <p class="empty-state">No players yet.</p>
+    {% endif %}
+</div>
+
+{% if backups %}
+<div class="roster-section">
+    <h3 class="roster-section__title">Backup list</h3>
+    <ol class="roster">
+        {% for r in backups %}
+        <li class="roster__item roster__item--filled">
+            <span class="roster__name">{{ r.user.first_name }} {{ r.user.last_name }}</span>
+            <div class="roster__actions">
+                {% if available_spots > 0 %}
+                <button
+                    class="btn btn--secondary btn--sm"
+                    hx-post="/admin/games/{{ game_id }}/move-to-main/{{ r.user_id }}"
+                    hx-target="#admin-roster"
+                    hx-swap="innerHTML"
+                >→ Main</button>
+                {% endif %}
+                <button
+                    class="btn btn--danger btn--sm"
+                    hx-post="/admin/games/{{ game_id }}/remove-player/{{ r.user_id }}"
+                    hx-target="#admin-roster"
+                    hx-swap="innerHTML"
+                    hx-confirm="Remove {{ r.user.first_name }} {{ r.user.last_name }} from the backup list?"
+                >✕</button>
+            </div>
+        </li>
+        {% endfor %}
+    </ol>
+</div>
+{% else %}
+<p class="empty-state">No one on the backup list.</p>
+{% endif %}

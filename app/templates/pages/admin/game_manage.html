@@ -1,0 +1,90 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}{{ game.title }} — Manage — SocialHockey{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div>
+            <h1>{{ game.title }}</h1>
+            <p class="game-detail__meta">
+                {{ game.game_date.strftime('%A, %d %B %Y') }}
+                &nbsp;&middot;&nbsp;
+                {{ game.start_time.strftime('%H:%M') }}–{{ game.end_time.strftime('%H:%M') }}
+            </p>
+        </div>
+        <a class="btn btn--secondary btn--sm" href="/admin/dashboard">Dashboard</a>
+    </div>
+
+    {# ── Player roster with admin controls ── #}
+    <h2 class="section-title">Player Roster</h2>
+    <div id="admin-roster">
+        {% include "components/admin_roster.html" %}
+    </div>
+
+    {# ── Add Player ── #}
+    <div class="add-player-section">
+        <h2 class="section-title">Add Player</h2>
+        <input
+            type="text"
+            name="q"
+            class="player-search-input"
+            placeholder="Search by name…"
+            autocomplete="off"
+            hx-get="/admin/games/{{ game_id }}/search-players"
+            hx-trigger="keyup changed delay:300ms"
+            hx-target="#player-search-results"
+            hx-swap="innerHTML"
+        >
+        <div id="player-search-results" class="player-search-results"></div>
+    </div>
+
+    {# ── Team Assignment ── #}
+    <h2 class="section-title">Team Assignment</h2>
+
+    <div id="team-assignment">
+        {% include "components/team_lists.html" %}
+    </div>
+
+    <div class="team-controls">
+        <button
+            class="btn btn--secondary"
+            hx-post="/admin/games/{{ game_id }}/random-teams"
+            hx-target="#team-assignment"
+            hx-swap="innerHTML"
+        >Randomise Teams</button>
+        <button
+            class="btn btn--secondary"
+            hx-post="/admin/games/{{ game_id }}/clear-teams"
+            hx-target="#team-assignment"
+            hx-swap="innerHTML"
+            hx-confirm="Clear all team assignments?"
+        >Clear Teams</button>
+    </div>
+
+    {# ── Export ── #}
+    <div
+        id="export-panel"
+        hx-get="/admin/games/{{ game_id }}/export"
+        hx-trigger="load"
+        hx-swap="innerHTML"
+    ></div>
+
+    {# ── Mark Complete ── #}
+    {% if game.status == "published" %}
+    <div class="danger-zone">
+        <button
+            class="btn btn--danger"
+            hx-post="/admin/games/{{ game_id }}/complete"
+            hx-confirm="Mark this game as completed? This cannot be undone."
+        >Mark Game as Completed</button>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
+<script src="{{ url_for('static', path='js/team-sortable.js') }}"></script>
+<script src="{{ url_for('static', path='js/clipboard.js') }}"></script>
+{% endblock %}

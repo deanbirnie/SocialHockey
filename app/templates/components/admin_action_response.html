@@ -1,0 +1,9 @@
+{% if clear_search %}
+<div id="player-search-results" hx-swap-oob="innerHTML"></div>
+{% endif %}
+
+<div id="team-assignment" hx-swap-oob="innerHTML">
+    {% include "components/team_lists.html" %}
+</div>
+
+{% include "components/admin_roster.html" %}

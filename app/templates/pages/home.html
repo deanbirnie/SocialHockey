@@ -1,0 +1,15 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}Home — SocialHockey{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if user %}
+        <h1>Welcome, {{ user.first_name }}!</h1>
+        <p><a href="/games">View upcoming games</a></p>
+    {% else %}
+        <h1>Welcome to SocialHockey</h1>
+        <p><a href="/auth/login">Sign in to get started</a></p>
+    {% endif %}
+</div>
+{% endblock %}
